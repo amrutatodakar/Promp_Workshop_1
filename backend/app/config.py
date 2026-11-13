@@ -13,7 +13,8 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     ENVIRONMENT: str = "development"
     PORT: int = 8000
-    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    FRONTEND_URL: str = "https://promp-workshop-1.onrender.com/"
+    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173,https://promp-workshop-1.onrender.com"
     GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-3.5-flash-lite"
     
@@ -23,6 +24,12 @@ class Settings(BaseSettings):
 
     @property
     def cors_origin_list(self) -> List[str]:
-        return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+        origins = []
+        for origin in self.CORS_ORIGINS.split(","):
+            cleaned = origin.strip()
+            if cleaned:
+                origins.append(cleaned)
+                origins.append(cleaned.rstrip("/"))
+        return list(dict.fromkeys(origins))
 
 settings = Settings()
