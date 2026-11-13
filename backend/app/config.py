@@ -19,11 +19,15 @@ class Settings(BaseSettings):
     # Frontend deployed on Vercel
     FRONTEND_URL: str = "https://promp-workshop-1.vercel.app"
 
-    # Allow requests from Vercel and local development
+    # Allow requests from all Vercel preview URLs and local development.
+    # On Render, override CORS_ORIGINS via the dashboard environment variable
+    # to include the exact Vercel deployment URL shown in Vercel > Deployments.
     CORS_ORIGINS: str = (
         "http://localhost:5173,"
         "http://127.0.0.1:5173,"
-        "https://promp-workshop-1.vercel.app"
+        "https://promp-workshop-1.vercel.app,"
+        "https://promp-workshop-1-2fkptnczc-aiet5.vercel.app,"
+        "https://promp-workshop-1-git-main-aiet5.vercel.app"
     )
 
     GEMINI_API_KEY: str = ""

@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: reportsaathi-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: TESSDATA_PREFIX
+        value: ./tessdata
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      # Set these secret values in the Render dashboard (not here):
+      # GEMINI_API_KEY   — your Gemini API key
+      # CORS_ORIGINS     — comma-separated list of allowed frontend origins
+      # SUPABASE_URL     — (Phase 5, leave blank for now)
+      # SUPABASE_KEY     — (Phase 5, leave blank for now)
+    healthCheckPath: /api/health
